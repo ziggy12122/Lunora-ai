@@ -1,61 +1,144 @@
+:root {
+  --navy: #1A2634;
+  --silver: #E8ECEF;
+  --gray: #A8B5C2;
+  --neon-blue: #00C4FF;
+  --purple: #7B68EE;
+  --gold: #FFD700;
+  --font-title: 'Orbitron', sans-serif;
+  --font-body: 'Montserrat', sans-serif;
+}
+
 body {
-  background: #f5f7fa;
-  font-family: "Inter", sans-serif;
   margin: 0;
+  background: linear-gradient(to bottom, var(--navy), black);
+  font-family: var(--font-body);
+  color: var(--silver);
+  overflow-x: hidden;
 }
 
-h1 {
-  color: #2c3e50;
-  font-size: 1.8rem;
-  margin: 1rem 0;
+.starfield-bg {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: url('../assets/bg-stars.mp4') center center / cover no-repeat;
+  z-index: -1;
+  opacity: 0.25;
+}
+
+/* Header Navbar */
+.navbar {
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  backdrop-filter: blur(10px);
+  background: rgba(26, 38, 52, 0.8);
+  padding: 1rem 2rem;
+  z-index: 1000;
+}
+
+.navbar .logo {
+  font-family: var(--font-title);
+  font-size: 1.5rem;
+  color: var(--neon-blue);
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: var(--silver);
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.navbar a:hover,
+.navbar a.active {
+  color: var(--neon-blue);
+  text-shadow: 0 0 8px var(--neon-blue);
+}
+
+/* Hero Section */
+.hero {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
+  position: relative;
+  overflow: hidden;
 }
 
-.gradio-container {
-  max-width: 800px;
-  margin: auto;
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-  padding: 1rem;
+.hero .moon-orb {
+  position: absolute;
+  top: 10%;
+  left: 5%;
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(circle at center, var(--gray), transparent);
+  border-radius: 50%;
+  animation: pulse 5s infinite ease-in-out;
+  opacity: 0.4;
 }
 
-.gr-chatbot {
-  background: #eef1f5;
+.hero h1 {
+  font-family: var(--font-title);
+  font-size: 2.8rem;
+  color: var(--silver);
+}
+
+.hero .glow {
+  color: var(--neon-blue);
+  text-shadow: 0 0 10px var(--neon-blue);
+}
+
+.tagline {
+  font-size: 1.2rem;
+  margin: 0.5rem 0 2rem;
+}
+
+.start-btn {
+  padding: 0.8rem 2rem;
+  background: linear-gradient(to right, var(--neon-blue), var(--purple));
+  border: none;
   border-radius: 8px;
-  padding: 1rem;
-  overflow-y: auto;
+  font-family: var(--font-title);
+  font-size: 1.1rem;
+  color: white;
+  text-decoration: none;
+  box-shadow: 0 0 8px var(--neon-blue);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.gr-chatbot .message.user {
-  background: #d0e6ff;
-  border-radius: 16px 16px 4px 16px;
-  padding: 10px 14px;
-  margin: 8px 0;
-  align-self: flex-end;
+.start-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 16px var(--purple);
 }
 
-.gr-chatbot .message.bot {
-  background: #e8e8e8;
-  border-radius: 16px 16px 16px 4px;
-  padding: 10px 14px;
-  margin: 8px 0;
-  align-self: flex-start;
+/* Scroll Indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: 2rem;
+  font-size: 1.5rem;
+  opacity: 0.7;
+  animation: pulse 2s infinite ease-in-out;
 }
 
-.gr-textbox textarea {
-  font-size: 16px;
-  border-radius: 6px;
-  padding: 12px;
-}
-
-.gr-button {
-  margin-top: 0.5rem;
-  border-radius: 6px;
-}
-
-@media (max-width: 768px) {
-  .gr-button, .gr-textbox textarea {
-    width: 100%;
+/* Animations */
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
   }
 }
