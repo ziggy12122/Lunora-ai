@@ -4,7 +4,6 @@ const chatWindow = document.getElementById("chat-window");
 const chatHistoryList = document.getElementById("chat-history");
 const newChatBtn = document.getElementById("new-chat");
 
-// Load history from localStorage
 let chatHistory = JSON.parse(localStorage.getItem("lumora_chats")) || [];
 let currentChat = [];
 
@@ -69,5 +68,4 @@ function generateMockReply(input) {
   return phrases[Math.floor(Math.random() * phrases.length)] + " " + input;
 }
 
-// Initialize
 renderHistory();

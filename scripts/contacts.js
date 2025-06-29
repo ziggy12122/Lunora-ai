@@ -12,7 +12,6 @@ document.getElementById("contact-form").addEventListener("submit", function (e) 
   this.style.display = "none";
   document.querySelector(".form-success").hidden = false;
 
-  // Optional: simulate sending...
   setTimeout(() => {
     this.reset();
     this.style.display = "block";

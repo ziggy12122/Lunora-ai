@@ -1,81 +1,71 @@
-import gradio as gr
-import torch
-from datetime import datetime
-from transformers import AutoTokenizer, AutoModelForCausalLM
-import sympy
+const chatForm = document.getElementById("chat-form");
+const chatInput = document.getElementById("chat-input");
+const chatWindow = document.getElementById("chat-window");
+const chatHistoryList = document.getElementById("chat-history");
+const newChatBtn = document.getElementById("new-chat");
 
-memory = {}  # simple memory store
+let chatHistory = JSON.parse(localStorage.getItem("lumora_chats")) || [];
+let currentChat = [];
 
-tokenizer = AutoTokenizer.from_pretrained("gpt2")
-model = AutoModelForCausalLM.from_pretrained("gpt2")
-model.eval()
+function renderMessage(sender, text) {
+  const msg = document.createElement("div");
+  msg.classList.add("message", sender);
+  msg.innerText = text;
+  chatWindow.appendChild(msg);
+  chatWindow.scrollTop = chatWindow.scrollHeight;
+}
 
-def chat(query, history):
-    if "what day" in query.lower() or "what time" in query.lower():
-        now = datetime.now().strftime("%A, %B %d, %Y at %I:%M %p")
-        response = f"Today is {now}."
+function saveChat() {
+  if (currentChat.length > 0) {
+    chatHistory.push(currentChat);
+    localStorage.setItem("lumora_chats", JSON.stringify(chatHistory));
+    renderHistory();
+  }
+}
 
-    elif any(op in query for op in ["+", "-", "*", "/", "^", "sqrt"]):
-        try:
-            result = sympy.sympify(query).evalf()
-            response = f"The answer is {result}"
-        except:
-            response = "Sorry, I couldn't evaluate that math expression."
+function renderHistory() {
+  chatHistoryList.innerHTML = "";
+  chatHistory.forEach((chat, i) => {
+    const li = document.createElement("li");
+    li.textContent = `Chat #${i + 1}`;
+    li.onclick = () => loadChat(i);
+    chatHistoryList.appendChild(li);
+  });
+}
 
-    elif "my name is" in query.lower():
-        name = query.split("is")[-1].strip().capitalize()
-        memory["name"] = name
-        response = f"Nice to meet you, {name}!"
+function loadChat(index) {
+  chatWindow.innerHTML = "";
+  currentChat = [...chatHistory[index]];
+  currentChat.forEach(entry => {
+    renderMessage(entry.sender, entry.text);
+  });
+}
 
-    elif "what's my name" in query.lower():
-        response = f"Your name is {memory.get('name', 'not yet stored')}."
+chatForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const userInput = chatInput.value.trim();
+  if (!userInput) return;
+  renderMessage("user", userInput);
+  currentChat.push({ sender: "user", text: userInput });
+  chatInput.value = "";
 
-    else:
-        prompt = ""
-        for user_input, ai_reply in history:
-            prompt += f"User: {user_input}\nAI: {ai_reply}\n"
-        prompt += f"User: {query}\nAI:"
+  // Simulated response
+  setTimeout(() => {
+    const reply = "🌕 Lumora says: " + generateMockReply(userInput);
+    renderMessage("ai", reply);
+    currentChat.push({ sender: "ai", text: reply });
+  }, 600);
+});
 
-        inputs = tokenizer(prompt, return_tensors="pt")
-        with torch.no_grad():
-            outputs = model.generate(
-                inputs.input_ids,
-                max_new_tokens=100,
-                do_sample=True,
-                temperature=0.7,
-                pad_token_id=tokenizer.eos_token_id
-            )
-        response = tokenizer.decode(outputs[0], skip_special_tokens=True)
-        response = response.split("AI:")[-1].strip()
+newChatBtn.onclick = () => {
+  saveChat();
+  currentChat = [];
+  chatWindow.innerHTML = "";
+};
 
-    history.append((query, response))
-    return "", history
+function generateMockReply(input) {
+  const phrases = ["Fascinating thought!", "Here's what I found:", "Let me explain…", "That's a stellar question!"];
+  return phrases[Math.floor(Math.random() * phrases.length)] + " " + input;
+}
 
-with gr.Blocks(css="style.css") as demo:
-    gr.Markdown("<h1 style='text-align:center;'>🧠 Smart GPT-2 Assistant</h1>")
-    chatbot = gr.Chatbot(height=500, full_width=True)
-    msg = gr.Textbox(placeholder="Ask anything...", show_label=False, full_width=True)
-    send_btn = gr.Button("Send", variant="primary")
-    clear_btn = gr.Button("🧹 Clear", elem_classes="secondary")
-
-    def disable_inputs():
-        return gr.update(interactive=False), gr.update(interactive=False)
-
-    def enable_inputs():
-        return gr.update(interactive=True), gr.update(interactive=True)
-
-    msg.submit(disable_inputs, None, [msg, send_btn], queue=False).then(
-        chat, [msg, chatbot], [msg, chatbot]
-    ).then(
-        enable_inputs, None, [msg, send_btn], queue=False
-    )
-
-    send_btn.click(disable_inputs, None, [msg, send_btn], queue=False).then(
-        chat, [msg, chatbot], [msg, chatbot]
-    ).then(
-        enable_inputs, None, [msg, send_btn], queue=False
-    )
-
-    clear_btn.click(lambda: ("", []), None, [msg, chatbot], queue=False)
-
-demo.launch()
+renderHistory();
