@@ -141,4 +141,125 @@ body {
     transform: scale(1.1);
     opacity: 1;
   }
+   
+/* Features Grid */
+.features-section {
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+.glow-title {
+  font-family: var(--font-title);
+  font-size: 2.5rem;
+  color: var(--neon-blue);
+  text-shadow: 0 0 12px var(--purple);
+  margin-bottom: 2rem;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2rem;
+  padding: 1rem;
+}
+
+.feature-card {
+  background: rgba(26, 38, 52, 0.6);
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0, 196, 255, 0.2);
+  transition: transform 0.3s ease;
+  backdrop-filter: blur(6px);
+}
+
+.feature-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 0 24px var(--purple);
+}
+
+.feature-card img {
+  height: 48px;
+  margin-bottom: 1rem;
+}
+
+/* About Timeline */
+.about-section {
+  padding: 2rem;
+  max-width: 800px;
+  margin: auto;
+  text-align: center;
+}
+
+.timeline {
+  display: flex;
+  justify-content: space-around;
+  gap: 1.5rem;
+  margin-top: 3rem;
+  flex-wrap: wrap;
+}
+
+.orbit {
+  text-align: center;
+}
+
+.planet {
+  font-size: 2rem;
+  background: linear-gradient(to right, var(--neon-blue), var(--purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: var(--font-title);
+}
+
+/* Contact Form */
+.contact-section {
+  padding: 3rem;
+  text-align: center;
+}
+
+#contact-form {
+  max-width: 500px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+#contact-form input,
+#contact-form textarea {
+  padding: 0.8rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--silver);
+  border: 1px solid transparent;
+  outline: none;
+  transition: border 0.3s ease;
+}
+
+#contact-form input:focus,
+#contact-form textarea:focus {
+  border-color: var(--neon-blue);
+  box-shadow: 0 0 8px var(--purple);
+}
+
+#contact-form button {
+  padding: 0.8rem;
+  background: linear-gradient(to right, var(--neon-blue), var(--purple));
+  border: none;
+  color: white;
+  border-radius: 8px;
+  font-family: var(--font-title);
+  transition: transform 0.3s ease;
+}
+
+#contact-form button:hover {
+  transform: scale(1.05);
+}
+
+.form-success {
+  margin-top: 2rem;
+  font-size: 1.1rem;
+  color: var(--gold);
+  animation: pulse 3s infinite;
 }

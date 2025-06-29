@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Contact Lumora</title>
+  <link rel="stylesheet" href="styles/style.css" />
+</head>
+<body>
+  <div class="starfield-bg"></div>
+  <header class="navbar">
+    <div class="logo">🌙 Lumora</div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="chat.html">Chat</a></li>
+        <li><a href="features.html">Features</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="contact-section">
+    <h1 class="glow-title">📬 Contact</h1>
+    <form id="contact-form">
+      <input type="text" placeholder="Name" required />
+      <input type="email" placeholder="Email" required />
+      <textarea placeholder="Your message..." rows="5" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+    <div class="form-success" hidden>
+      🌟 Thanks for reaching out! Your message is drifting through the stars…
+    </div>
+  </main>
+
+  <script src="scripts/contact.js"></script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Lumora Chat – Converse with Your AI</title>
+  <link rel="stylesheet" href="styles/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Montserrat&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="starfield-bg"></div>
+  <header class="navbar">
+    <div class="logo">🌙 Lumora</div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="chat.html" class="active">Chat</a></li>
+        <li><a href="features.html">Features</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="chat-container">
+    <aside class="chat-sidebar">
+      <h2>🕘 Chat History</h2>
+      <ul id="chat-history"></ul>
+      <button id="new-chat">+ New Chat</button>
+    </aside>
+
+    <section class="chat-main">
+      <div id="chat-window"></div>
+      <form id="chat-form">
+        <input type="text" id="chat-input" placeholder="Type a message..." autocomplete="off" />
+        <button type="submit">➤</button>
+      </form>
+    </section>
+  </main>
+
+  <script src="scripts/chat.js"></script>
+</body>
+</html>
