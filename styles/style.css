@@ -1,10 +1,155 @@
-/* Responsive Chat Layout */
+/* 🌌 Base Styles */
+body {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  background-color: #0a0a23;
+  color: #f0f0f0;
+}
+
+h1, h2, h3 {
+  margin: 0.5em 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* 🌙 Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #14143a;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+}
+
+.navbar .logo {
+  font-size: 1.5rem;
+  color: #f5f5f5;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+}
+
+.navbar a {
+  padding: 0.5rem 1rem;
+  color: #ccc;
+  transition: color 0.3s ease;
+}
+
+.navbar a.active,
+.navbar a:hover {
+  color: #00ffe7;
+}
+
+/* 🌠 Hero Section */
+.hero {
+  text-align: center;
+  padding: 5rem 2rem;
+  background: linear-gradient(#0a0a23, #1c1c4e);
+}
+
+.glow-title {
+  font-size: 3rem;
+  color: #ffffff;
+  text-shadow: 0 0 15px #00ffe7;
+}
+
+.cta-button {
+  display: inline-block;
+  margin-top: 2rem;
+  padding: 0.75rem 1.5rem;
+  background: #00ffe7;
+  color: #0a0a23;
+  font-weight: bold;
+  border-radius: 6px;
+}
+
+/* 🧩 Features Grid */
+.features-section {
+  padding: 3rem 2rem;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+}
+
+.feature-card {
+  background: #1f1f3d;
+  padding: 1rem;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.feature-card img {
+  width: 48px;
+  margin-bottom: 0.5rem;
+}
+
+/* 🧭 About Timeline */
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.event {
+  background: #1f1f3d;
+  padding: 1rem;
+  border-radius: 10px;
+}
+
+/* 📬 Contact Form */
+.contact-section {
+  padding: 2rem;
+}
+
+#contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 500px;
+  margin: auto;
+}
+
+#contact-form input,
+#contact-form textarea {
+  padding: 0.75rem;
+  border-radius: 6px;
+  border: none;
+  background: #222;
+  color: #fff;
+}
+
+#contact-form button {
+  background: #00ffe7;
+  color: #0a0a23;
+  font-weight: bold;
+  padding: 0.75rem;
+  border-radius: 6px;
+  border: none;
+}
+
+.form-success {
+  text-align: center;
+  margin-top: 2rem;
+  color: #00ffe7;
+}
+
+/* 💬 Chat UI */
 .chat-ui {
   display: flex;
   flex-direction: row;
   height: 100vh;
   background: linear-gradient(to bottom, #0a0a23, #1c1c4e);
-  color: #f0f0f0;
 }
 
 .chat-history-panel {
@@ -21,13 +166,11 @@
   display: flex;
   flex-direction: column;
   padding: 1rem;
-  max-width: 100%;
 }
 
 .chat-window {
   flex: 1;
   overflow-y: auto;
-  padding-bottom: 1rem;
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -66,11 +209,10 @@
 .chat-input-bar input {
   flex: 1;
   padding: 0.75rem;
-  border: none;
   border-radius: 8px;
   background: #222;
   color: #fff;
-  font-size: 1rem;
+  border: none;
 }
 
 .chat-input-bar button {
@@ -83,7 +225,7 @@
   cursor: pointer;
 }
 
-/* Typing Indicator */
+/* ✨ Typing Indicator */
 .typing-indicator {
   display: flex;
   justify-content: center;
@@ -105,7 +247,7 @@
   40% { opacity: 1; }
 }
 
-/* Mobile Responsiveness */
+/* 📱 Mobile Responsiveness */
 @media screen and (max-width: 768px) {
   .chat-ui {
     flex-direction: column;
@@ -124,11 +266,12 @@
     font-size: 1rem;
   }
 
-  .chat-input-bar input {
+  .chat-input-bar input,
+  .chat-input-bar button {
     font-size: 1rem;
   }
 
-  .chat-input-bar button {
-    font-size: 1rem;
+  .features-grid {
+    grid-template-columns: 1fr;
   }
 }
