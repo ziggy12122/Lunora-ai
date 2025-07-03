@@ -1,71 +1,42 @@
-const chatForm = document.getElementById("chat-form");
-const chatInput = document.getElementById("chat-input");
-const chatWindow = document.getElementById("chat-window");
-const chatHistoryList = document.getElementById("chat-history");
-const newChatBtn = document.getElementById("new-chat");
+import gradio as gr
+from llama_cpp import Llama
+from gradio.themes.base import Base
 
-let chatHistory = JSON.parse(localStorage.getItem("lumora_chats")) || [];
-let currentChat = [];
+# Load GPT4ALL model
+llm = Llama(model_path="./ggjt-model.bin", n_ctx=512)
 
-function renderMessage(sender, text) {
-  const msg = document.createElement("div");
-  msg.classList.add("message", sender);
-  msg.innerText = text;
-  chatWindow.appendChild(msg);
-  chatWindow.scrollTop = chatWindow.scrollHeight;
-}
+# Custom theme (fixed)
+class SeafoamCustom(Base):
+    def __init__(self):
+        super().set(
+            primary_hue="teal",
+            neutral_hue="gray"
+        )
 
-function saveChat() {
-  if (currentChat.length > 0) {
-    chatHistory.push(currentChat);
-    localStorage.setItem("lumora_chats", JSON.stringify(chatHistory));
-    renderHistory();
-  }
-}
+# Response function
+def respond(message, history):
+    prompt = f"User: {message}\nAI:"
+    output = llm(prompt, max_tokens=100, stop=["User:", "AI:"])
+    return output["choices"][0]["text"].strip()
 
-function renderHistory() {
-  chatHistoryList.innerHTML = "";
-  chatHistory.forEach((chat, i) => {
-    const li = document.createElement("li");
-    li.textContent = `Chat #${i + 1}`;
-    li.onclick = () => loadChat(i);
-    chatHistoryList.appendChild(li);
-  });
-}
+# Gradio UI
+with gr.Blocks(theme=SeafoamCustom()) as demo:
+    gr.Markdown("## 🌙 Lumora – Your Cosmic Companion")
 
-function loadChat(index) {
-  chatWindow.innerHTML = "";
-  currentChat = [...chatHistory[index]];
-  currentChat.forEach(entry => {
-    renderMessage(entry.sender, entry.text);
-  });
-}
+    with gr.Row():
+        chatbot = gr.Chatbot(height=500)
 
-chatForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const userInput = chatInput.value.trim();
-  if (!userInput) return;
-  renderMessage("user", userInput);
-  currentChat.push({ sender: "user", text: userInput });
-  chatInput.value = "";
+    with gr.Row():
+        msg = gr.Textbox(placeholder="Ask Lumora anything...", label="Your Message")
+        send_btn = gr.Button("Send")
 
-  // Simulated response
-  setTimeout(() => {
-    const reply = "🌕 Lumora says: " + generateMockReply(userInput);
-    renderMessage("ai", reply);
-    currentChat.push({ sender: "ai", text: reply });
-  }, 600);
-});
+    history = gr.State([])
 
-newChatBtn.onclick = () => {
-  saveChat();
-  currentChat = [];
-  chatWindow.innerHTML = "";
-};
+    def handle_input(user_input, chat_history):
+        reply = respond(user_input, chat_history)
+        chat_history.append((user_input, reply))
+        return chat_history, chat_history
 
-function generateMockReply(input) {
-  const phrases = ["Fascinating thought!", "Here's what I found:", "Let me explain…", "That's a stellar question!"];
-  return phrases[Math.floor(Math.random() * phrases.length)] + " " + input;
-}
+    send_btn.click(handle_input, inputs=[msg, history], outputs=[chatbot, history])
 
-renderHistory();
+demo.launch()
