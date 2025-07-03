@@ -49,7 +49,6 @@ chatForm.addEventListener("submit", (e) => {
   currentChat.push({ sender: "user", text: userInput });
   chatInput.value = "";
 
-  // Simulated response
   setTimeout(() => {
     const reply = "🌕 Lumora says: " + generateMockReply(userInput);
     renderMessage("ai", reply);

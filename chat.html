@@ -2,12 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Lumora Chat – Converse with Your AI</title>
+  <title>Chat – Lumora</title>
   <link rel="stylesheet" href="styles/style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Montserrat&display=swap" rel="stylesheet">
+  <script defer src="scripts/chat.js"></script>
 </head>
 <body>
-  <div class="starfield-bg"></div>
   <header class="navbar">
     <div class="logo">🌙 Lumora</div>
     <nav>
@@ -21,22 +20,33 @@
     </nav>
   </header>
 
-  <main class="chat-container">
-    <aside class="chat-sidebar">
-      <h2>🕘 Chat History</h2>
-      <ul id="chat-history"></ul>
-      <button id="new-chat">+ New Chat</button>
-    </aside>
+  <main class="chat-interface">
+    <h1 class="glow-title">Ask Lumora Anything</h1>
+    <div id="chat-window"></div>
 
-    <section class="chat-main">
-      <div id="chat-window"></div>
-      <form id="chat-form">
-        <input type="text" id="chat-input" placeholder="Type a message..." autocomplete="off" />
-        <button type="submit">➤</button>
-      </form>
-    </section>
+    <form id="chat-form">
+      <input type="text" id="chat-input" placeholder="Type your message..." />
+      <button type="submit">Send</button>
+    </form>
+
+    <button id="new-chat">Start New Chat</button>
+    <h2 class="glow-title">Saved Conversations</h2>
+    <ul id="chat-history"></ul>
   </main>
 
-  <script src="scripts/chat.js"></script>
+  <footer>
+    <p>&copy; 2025 Lumora AI. All rights reserved.</p>
+    <div class="social-icons">
+      <a href="https://twitter.com/yourprofile" target="_blank">
+        <img src="assets/icons/twitter.svg" alt="Twitter" />
+      </a>
+      <a href="https://github.com/yourprofile" target="_blank">
+        <img src="assets/icons/github.svg" alt="GitHub" />
+      </a>
+      <a href="mailto:your@email.com">
+        <img src="assets/icons/mail.svg" alt="Email" />
+      </a>
+    </div>
+  </footer>
 </body>
 </html>

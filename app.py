@@ -5,7 +5,6 @@ from gradio.themes.base import Base
 # Load GPT4ALL model
 llm = Llama(model_path="./ggjt-model.bin", n_ctx=512)
 
-# Custom theme (fixed)
 class SeafoamCustom(Base):
     def __init__(self):
         super().set(
@@ -13,13 +12,11 @@ class SeafoamCustom(Base):
             neutral_hue="gray"
         )
 
-# Response function
 def respond(message, history):
     prompt = f"User: {message}\nAI:"
     output = llm(prompt, max_tokens=100, stop=["User:", "AI:"])
     return output["choices"][0]["text"].strip()
 
-# Gradio UI
 with gr.Blocks(theme=SeafoamCustom()) as demo:
     gr.Markdown("## 🌙 Lumora – Your Cosmic Companion")
 
