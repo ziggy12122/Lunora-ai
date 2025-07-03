@@ -20,18 +20,25 @@
     </nav>
   </header>
 
-  <main class="chat-interface">
-    <h1 class="glow-title">Ask Lumora Anything</h1>
-    <div id="chat-window"></div>
+  <main class="chat-ui">
+    <aside class="chat-history-panel">
+      <h2>Saved Chats</h2>
+      <ul id="chat-history"></ul>
+    </aside>
 
-    <form id="chat-form">
-      <input type="text" id="chat-input" placeholder="Type your message..." />
-      <button type="submit">Send</button>
-    </form>
+    <section class="chat-window-panel">
+      <div id="chat-window" class="chat-window"></div>
 
-    <button id="new-chat">Start New Chat</button>
-    <h2 class="glow-title">Saved Conversations</h2>
-    <ul id="chat-history"></ul>
+      <form id="chat-form" class="chat-input-bar">
+        <input type="text" id="chat-input" placeholder="Type your message..." />
+        <button type="submit">Send</button>
+      </form>
+
+      <button id="new-chat">🌀 New Chat</button>
+      <div class="typing-indicator" hidden>
+        <span></span><span></span><span></span>
+      </div>
+    </section>
   </main>
 
   <footer>
