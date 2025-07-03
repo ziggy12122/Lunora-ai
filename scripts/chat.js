@@ -41,19 +41,34 @@ function loadChat(index) {
   });
 }
 
-chatForm.addEventListener("submit", (e) => {
+async function fetchAIResponse(prompt) {
+  try {
+    const response = await fetch("https://huggingface.co/spaces/Zpofeee/GPT4ALL", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ data: [prompt] })
+    });
+    const result = await response.json();
+    return result?.data?.[0] || "Hmm… I’m not sure how to answer that yet.";
+  } catch (err) {
+    console.error("API error:", err);
+    return "⚠️ Lumora couldn't connect to the stars right now.";
+  }
+}
+
+chatForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   const userInput = chatInput.value.trim();
   if (!userInput) return;
+
   renderMessage("user", userInput);
   currentChat.push({ sender: "user", text: userInput });
   chatInput.value = "";
 
-  setTimeout(() => {
-    const reply = "🌕 Lumora says: " + generateMockReply(userInput);
-    renderMessage("ai", reply);
-    currentChat.push({ sender: "ai", text: reply });
-  }, 600);
+  // Get real AI response from backend
+  const reply = await fetchAIResponse(userInput);
+  renderMessage("ai", reply);
+  currentChat.push({ sender: "ai", text: reply });
 });
 
 newChatBtn.onclick = () => {
@@ -61,10 +76,5 @@ newChatBtn.onclick = () => {
   currentChat = [];
   chatWindow.innerHTML = "";
 };
-
-function generateMockReply(input) {
-  const phrases = ["Fascinating thought!", "Here's what I found:", "Let me explain…", "That's a stellar question!"];
-  return phrases[Math.floor(Math.random() * phrases.length)] + " " + input;
-}
 
 renderHistory();
