@@ -1,5 +1,0 @@
-gradio
-transformers
-torch
-sympy
-requests
